@@ -1,0 +1,64 @@
+﻿@using System.Security.Claims
+
+@model IEnumerable<User>
+<h2>Users List</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@{
+    string UserId = null;
+    foreach (var claim in User.Claims)
+    {
+        if (claim.Type == "sub")
+        {
+            UserId = claim.Value;
+        }
+    }
+}
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.UserId != Int32.Parse(UserId))
+                {                   
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}

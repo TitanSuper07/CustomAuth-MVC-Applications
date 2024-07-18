@@ -1,0 +1,40 @@
+﻿@model EditUserViewModel
+
+<h2>Edit User</h2>
+
+<form asp-action="Edit">
+    @* we added so that the error can be displayed eariler it was not displaying *@
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="UserId" />
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Department" class="control-label"></label>
+        <input asp-for="Department" class="form-control" />
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RoleId" class="control-label"></label>
+        <select asp-for="RoleId" class="form-control">
+            <option value="">Select Role</option>
+            <option value="1">Admin</option>
+            <option value="2">Normal User</option>
+            <!-- Add more roles as needed -->
+        </select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
